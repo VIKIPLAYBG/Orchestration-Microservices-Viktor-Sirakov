@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import SessionLocal
 from crud import create_note, get_notes
@@ -6,6 +7,13 @@ from schemas import NoteCreate, NoteOut
 from init_db import init_db  # call function explicitly
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or ["http://localhost:8080"] for stricter control
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # explicitly create tables
 init_db()
